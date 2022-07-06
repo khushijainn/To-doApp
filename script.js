@@ -63,6 +63,7 @@ function EventHandler(event) {
 
         delTask.addEventListener("click", function (event) {
             var btn = event.target.parentNode.parentNode;
+            console.log('btn :>> ', btn);
             btn.innerHTML = "";
 
             // Get item from local storage
@@ -76,13 +77,14 @@ function EventHandler(event) {
             //     }
             // });
             // // then splice the array 
-            
+
             // store again into local storage
 
             let localItems = JSON.parse(localStorage.getItem("todos"));
 
-            List.splice(index, 1);
-            localStorage.setItem("todos",JSON.stringify(list));
+            todos.splice(todos.length, 1);
+            console.log('todos :>> ', todos);
+            localStorage.setItem("todos", JSON.stringify(todos));
         });
 
         checkbox.addEventListener("change", function () {
@@ -113,8 +115,8 @@ var storedTodos = localStorage.getItem("todos");
 if (storedTodos !== null) {
     todos = JSON.parse(storedTodos);
 }
-
-todos.forEach(function (value) {
+console.log('todos :>> ', todos);
+todos.forEach(function (value, index) {
     var Container = document.createElement("div");
     var todoHeading = document.createElement("h5");
     var button = document.createElement("div");
@@ -128,15 +130,21 @@ todos.forEach(function (value) {
     checkbox.setAttribute("id", "checkbox");
     delTask.setAttribute("id", "delTask");
     delTask.setAttribute("class", "bi bi-trash");
+    delTask.setAttribute("data-index", index);
 
     checkbox.addEventListener("change", function () {
         todoHeading.style.textDecoration = checkbox.checked ? "line-through" : "none";
 
     });
 
-    delTask.addEventListener("click", function(event){
+    delTask.addEventListener("click", function (event) {
         var btn = event.target.parentNode.parentNode;
         btn.innerHTML = "";
+        let localItems = JSON.parse(localStorage.getItem("todos"));
+
+        todos.splice(index, 1);
+        console.log('todos :>> ', todos);
+        localStorage.setItem("todos", JSON.stringify(todos));
     })
 
 
